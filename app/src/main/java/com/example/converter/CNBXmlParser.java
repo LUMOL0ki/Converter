@@ -69,8 +69,12 @@ public class CNBXmlParser {
   
     private Entry readEntry(XmlPullParser parser) throws XmlPullParserException, IOException {
         parser.require(XmlPullParser.START_TAG, ns, "radek");
-        String kod = null;
-        
+        String code = null;
+        String currency = null;
+        String country = null;
+        int amount = 0;
+        Double rate = 0.0;
+
         Log.d("readEntry","START");
 
             String name = parser.getName();
@@ -80,10 +84,20 @@ public class CNBXmlParser {
             	Log.d("attr","i = " + i + " name = " + parser.getAttributeName(i) + " value = " + parser.getAttributeValue(i));
             	
             	if (parser.getAttributeName(i).equals("kod")) {
-            		kod = parser.getAttributeValue(i);
+            		code = parser.getAttributeValue(i);
             	}
-            	if(parser.getAttributeName(i).equals("country")){
-
+            	if(parser.getAttributeName(i).equals("mena")){
+                    currency = parser.getAttributeValue(i);
+                }
+            	if(parser.getAttributeName(i).equals("mnozstvi")){
+                    amount = Integer.parseInt(parser.getAttributeValue(i));
+                }
+                if(parser.getAttributeName(i).equals("kurz")){
+                    String tempRate = parser.getAttributeValue(i).replace(",", ".");
+                    rate = Double.parseDouble(tempRate);
+                }
+                if(parser.getAttributeName(i).equals("zeme")){
+                    country = parser.getAttributeValue(i);
                 }
             	// TODO 2. - Zde je potreba dopsat naplneni dalsich udaju pro kazdou menu
                 // TODO 2. - Vzhledem k tomu, ze kazdy radek listu men je reprezetovan konkretni instaci tridy Entry, je zde take take potreba vlozit spravne parametry do konstruktoru teto tridy
@@ -93,7 +107,7 @@ public class CNBXmlParser {
             
         parser.next();
             
-        return new Entry(kod);
+        return new Entry(code, country, currency, amount, rate);
     }
   
 }
