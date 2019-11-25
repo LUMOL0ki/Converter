@@ -3,18 +3,13 @@ package com.example.converter;
 import android.media.Image;
 
 public class Entry {
-    public final String kod;
     private final String code;
     private final String country;
     private final String currency;
     private int amount;
     private double rate;
 
-    // TODO 3. Rozsirit dalsi udaje ve tride, ktere se budou vest pro kazdou menu
-    // TODO 3. To zahrnuje i upraveni konstruktoru
-            
     Entry(String code, String country, String currency, int amount, double rate) {//this.country = country;
-        this.kod = code;
         this.code = code;
         this.country = country;
         this.currency = currency;
